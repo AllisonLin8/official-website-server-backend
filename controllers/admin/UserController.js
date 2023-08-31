@@ -13,7 +13,7 @@ const UserController = {
       const token = JWT.generator(
         {
           id: result[0].id,
-          name: result[0].name,
+          email: result[0].email,
         },
         '1d'
       )
@@ -21,6 +21,7 @@ const UserController = {
       res.send({
         ActionType: 'OK',
         msg: '登入成功！',
+        userInfo: result[0],
       })
     }
   },

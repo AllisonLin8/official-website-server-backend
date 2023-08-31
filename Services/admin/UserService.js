@@ -7,6 +7,9 @@ const UserService = {
       raw: true,
       nest: true,
       where: { email, password },
+      attributes: {
+        exclude: ['password', 'createdAt', 'updatedAt'],
+      },
     })
   },
 }
