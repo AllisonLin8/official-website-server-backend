@@ -1,11 +1,11 @@
-const jsonwebtoken = require("jsonwebtoken")
-const secret = process.env.SECRET
+const jsonwebtoken = require('jsonwebtoken')
+const secret = process.env.JWT_SECRET
 
 const JWT = {
   generator: (value, exp) => {
     return jsonwebtoken.sign(value, secret, { expiresIn: exp })
   },
-  verify: (token) => {
+  verify: token => {
     try {
       return jsonwebtoken.verify(token, secret)
     } catch (e) {

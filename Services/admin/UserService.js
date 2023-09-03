@@ -1,3 +1,4 @@
+const { raw } = require('express')
 const { User } = require('../../db/models')
 
 const UserService = {
@@ -11,6 +12,17 @@ const UserService = {
         exclude: ['password', 'createdAt', 'updatedAt'],
       },
     })
+  },
+  upload: async newData => {
+    const originalData = await User.findOne({
+      where: { id: newData.id },
+      raw: true,
+    })
+
+    const originalAvatar = originalData.avatar
+    const { id, name, intro } = newData
+    const avatar = newData.avatar || originalAvatar
+    return User.update({ name, intro, avatar }, { where: { id } })
   },
 }
 

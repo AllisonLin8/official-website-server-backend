@@ -1,11 +1,19 @@
-const UserRouter = require("express").Router()
-const UserController = require("../../controllers/admin/UserController")
+const UserRouter = require('express').Router()
+const UserController = require('../../controllers/admin/UserController')
 
-UserRouter.post("/adminapi/user/login", UserController.login)
+const upload = require('../../middleware/multer')
 
-// 測試用↓
-// UserRouter.get('/adminapi/user/home', (req, res) => {
-//   res.send({ 'GET ok': 1 })
+// ! 測試token刷新用
+// UserRouter.get('/adminapi/users/home', (req, res) => {
+//   res.send({ ok: 1 })
 // })
+
+UserRouter.post('/adminapi/users/login', UserController.login)
+
+UserRouter.post(
+  '/adminapi/users/upload',
+  upload.single('file'),
+  UserController.upload
+)
 
 module.exports = UserRouter
