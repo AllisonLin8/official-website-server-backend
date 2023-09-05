@@ -1,25 +1,23 @@
-const { raw } = require('express')
 const { User } = require('../../db/models')
 
 const UserService = {
-  login: async (email, password) => {
-    // return 資料庫查詢結果
-    return User.findAll({
+  login: async email => {
+    return await User.findOne({
+      where: { email },
+      attributes: { exclude: ['createdAt', 'updatedAt'] },
       raw: true,
-      nest: true,
-      where: { email, password },
-      attributes: {
-        exclude: ['password', 'createdAt', 'updatedAt'],
-      },
     })
   },
-  upload: async newData => {
-    const { id } = newData
-    if (newData.avatar) {
-      const { name, intro, avatar } = newData
+  signUp: async ({ name, email, password, role = 'general' }) => {
+    return User.create({ name, email, password, role })
+  },
+  upload: async uploadData => {
+    const { id } = uploadData
+    if (uploadData.avatar) {
+      const { name, intro, avatar } = uploadData
       return User.update({ name, intro, avatar }, { where: { id } })
     } else {
-      const { name, intro } = newData
+      const { name, intro } = uploadData
       return User.update({ name, intro }, { where: { id } })
     }
   },

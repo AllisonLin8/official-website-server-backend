@@ -1,6 +1,6 @@
 const JWT = require('../utils/JWT')
 const passport = require('../config/passport')
-const noVerification = ['/adminapi/users/login']
+const noVerification = ['/adminapi/users/login', '/adminapi/users/signup']
 
 const authenticated = (req, res, next) => {
   // 確認該路由是否需要驗證

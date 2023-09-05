@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 const { matchedData } = require('express-validator')
 
 const UserService = require('../../Services/admin/UserService')
@@ -8,19 +9,33 @@ const { imgurFileHandler, localFileHandler } = require('../../utils/imgur')
 const UserController = {
   login: async (req, res) => {
     const { email, password } = matchedData(req)
-    const result = await UserService.login(email, password)
-    if (result.length === 0) {
+    const user = await UserService.login(email)
+    if (!user || !bcrypt.compareSync(password, user.password)) {
       res.json({
         status: 'error',
         error: '帳號或密碼錯誤！',
       })
     } else {
-      const token = JWT.generator({ id: result[0].id, email: result[0].email })
+      delete user.password
+      const token = JWT.generator({ id: user.id, email: user.email })
       res.header('authorization', token)
       res.json({
         status: 'success',
         msg: '登入成功！',
-        userInfo: result[0],
+        userInfo: user,
+      })
+    }
+  },
+  signUp: async (req, res) => {
+    const { name, email, password } = matchedData(req)
+    const saltRounds = 10
+    const salt = bcrypt.genSaltSync(saltRounds)
+    const hash = bcrypt.hashSync(password, salt)
+    const result = await UserService.signUp({ name, email, password: hash })
+    if (result.toJSON()) {
+      res.json({
+        status: 'success',
+        msg: '註冊成功！',
       })
     }
   },
@@ -36,7 +51,7 @@ const UserController = {
 
     res.json({
       status: 'success',
-      msg: '個人資料更新成功',
+      msg: '個人資料更新成功！',
       userInfo: {
         id: req.user.id,
         ...newData,
