@@ -1,9 +1,13 @@
+const { matchedData } = require('express-validator')
+
 const UserService = require('../../Services/admin/UserService')
+
 const JWT = require('../../utils/JWT')
 const { imgurFileHandler, localFileHandler } = require('../../utils/imgur')
+
 const UserController = {
   login: async (req, res) => {
-    const { email, password } = req.body
+    const { email, password } = matchedData(req)
     const result = await UserService.login(email, password)
     if (result.length === 0) {
       res.json({
@@ -21,7 +25,7 @@ const UserController = {
     }
   },
   upload: async (req, res) => {
-    const { name, intro } = req.body
+    const { name, intro } = matchedData(req)
     const { file } = req
 
     const newData = { id: req.user.id, name, intro }
