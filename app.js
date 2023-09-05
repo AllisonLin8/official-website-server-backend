@@ -7,7 +7,7 @@ const cors = require('cors')
 const express = require('express')
 
 const { corsOptionsDelegate } = require('./config/cors')
-const { myTokenChecker } = require('./middleware/myTokenChecker')
+const { authenticated } = require('./middleware/myTokenChecker')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
 
-app.use(myTokenChecker)
+app.use(authenticated)
 
 app.use(UserRouter)
 

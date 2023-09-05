@@ -14,15 +14,14 @@ const UserService = {
     })
   },
   upload: async newData => {
-    const originalData = await User.findOne({
-      where: { id: newData.id },
-      raw: true,
-    })
-
-    const originalAvatar = originalData.avatar
-    const { id, name, intro } = newData
-    const avatar = newData.avatar || originalAvatar
-    return User.update({ name, intro, avatar }, { where: { id } })
+    const { id } = newData
+    if (newData.avatar) {
+      const { name, intro, avatar } = newData
+      return User.update({ name, intro, avatar }, { where: { id } })
+    } else {
+      const { name, intro } = newData
+      return User.update({ name, intro }, { where: { id } })
+    }
   },
 }
 
