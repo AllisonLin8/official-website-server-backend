@@ -45,6 +45,7 @@ const signUpDataHelper = [
         return true
       }
     }),
+  body('roleId').optional(),
 ]
 
 const modifyPersonalInfo = [

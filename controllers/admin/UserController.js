@@ -27,11 +27,14 @@ const UserController = {
     }
   },
   signUp: async (req, res) => {
-    const { name, email, password } = matchedData(req)
-    const saltRounds = 10
-    const salt = bcrypt.genSaltSync(saltRounds)
-    const hash = bcrypt.hashSync(password, salt)
-    const result = await UserService.signUp({ name, email, password: hash })
+    const { name, email, password, roleId } = matchedData(req)
+    const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+    const result = await UserService.signUp({
+      name,
+      email,
+      password: hash,
+      roleId,
+    })
     if (result.toJSON()) {
       res.json({
         status: 'success',
