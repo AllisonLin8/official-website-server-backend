@@ -37,6 +37,45 @@ const UserService = {
       return await User.update({ name, intro }, { where: { id } })
     }
   },
+  getUsers: async () => {
+    const users = await User.findAll({
+      attributes: {
+        exclude: ['password', 'intro', 'roleId', 'createdAt', 'updatedAt'],
+      },
+      include: [{ model: Role, attributes: ['name'] }],
+      raw: true,
+      nest: true,
+    })
+    if (users.length !== 0) {
+      users.forEach(item => {
+        item.role = item.Role.name
+        delete item.Role
+      })
+    }
+    return users
+  },
+  getUser: async id => {
+    const user = await User.findOne({
+      where: { id },
+      attributes: {
+        exclude: ['password', 'intro', 'createdAt', 'updatedAt'],
+      },
+      include: [{ model: Role, attributes: ['name'] }],
+      raw: true,
+      nest: true,
+    })
+    if (user) {
+      user.role = user.Role.name
+      delete user.Role
+    }
+    return user
+  },
+  deleteUser: async (id, isDeleted) => {
+    return await User.update(
+      { isDeleted: !isDeleted },
+      { where: { id }, raw: true }
+    )
+  },
 }
 
 module.exports = UserService

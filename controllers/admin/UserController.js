@@ -61,6 +61,58 @@ const UserController = {
       },
     })
   },
+  getUsers: async (req, res) => {
+    const users = await UserService.getUsers()
+    if (users.length !== 0) {
+      return res.json({
+        status: 'success',
+        msg: '獲取所有使用者資料成功！',
+        users,
+      })
+    } else {
+      return res.json({
+        status: 'success',
+        msg: '目前沒有任何使用者！',
+      })
+    }
+  },
+  getUser: async (req, res) => {
+    const { userId } = matchedData(req)
+    const user = await UserService.getUser(userId)
+    if (!user) {
+      return res.json({
+        status: 'success',
+        msg: '該名使用者不存在！',
+      })
+    }
+    return res.json({
+      status: 'success',
+      msg: '獲取使用者資料成功！',
+      user,
+    })
+  },
+  deleteUser: async (req, res) => {
+    const { userId } = matchedData(req)
+    const user = await UserService.getUser(userId)
+    if (!user) {
+      return res.json({
+        status: 'success',
+        msg: '該名使用者不存在！',
+      })
+    }
+    if (user.role === 'root') {
+      return res.json({
+        status: 'error',
+        msg: '不可刪除管理員！',
+      })
+    }
+    await UserService.deleteUser(userId, user.isDeleted)
+    const msg = !user.isDeleted ? '刪除使用者成功！' : '取消刪除使用者成功！'
+    return res.json({
+      status: 'success',
+      msg,
+    })
+  },
 }
 
 module.exports = UserController

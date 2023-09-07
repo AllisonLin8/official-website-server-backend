@@ -1,4 +1,4 @@
-const { body } = require('express-validator')
+const { body, param } = require('express-validator')
 const { User } = require('../db/models')
 
 const loginDataHelper = [
@@ -48,7 +48,7 @@ const signUpDataHelper = [
   body('roleId').optional(),
 ]
 
-const modifyPersonalInfo = [
+const modifyPersonalInfoHelper = [
   body('name')
     .trim()
     .notEmpty()
@@ -60,8 +60,19 @@ const modifyPersonalInfo = [
     .isLength({ min: 0, max: 200 })
     .withMessage('自介最長 200 個字！'),
 ]
+
+const deleteUserHelper = [
+  param('userId').notEmpty().withMessage('使用者ID不可為空！'),
+]
+
+const getUserHelper = [
+  param('userId').notEmpty().withMessage('使用者ID不可為空！'),
+]
+
 module.exports = {
   loginDataHelper,
   signUpDataHelper,
-  modifyPersonalInfo,
+  modifyPersonalInfoHelper,
+  deleteUserHelper,
+  getUserHelper,
 }
