@@ -11,6 +11,7 @@ const {
   modifyPersonalInfoHelper,
   deleteUserHelper,
   getUserHelper,
+  putUserHelper,
 } = require('../../helpers/validator-helper')
 
 // ! 測試token刷新用
@@ -36,6 +37,13 @@ UserRouter.post(
   upload.single('file'),
   validate(modifyPersonalInfoHelper),
   UserController.upload
+)
+
+UserRouter.put(
+  '/adminapi/users/edit/:userId',
+  authenticatedRoot,
+  validate(putUserHelper),
+  UserController.putUser
 )
 
 UserRouter.delete(

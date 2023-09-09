@@ -76,6 +76,23 @@ const UserService = {
       { where: { id }, raw: true }
     )
   },
+  putUser: async (id, updatedData) => {
+    const result = await User.update(updatedData, { where: { id } })
+    if (result[0] === 1) {
+      const updatedUser = await User.findOne({
+        where: { id },
+        attributes: ['email', 'name'],
+        include: [{ model: Role, attributes: ['name'] }],
+        raw: true,
+        nest: true,
+      })
+      if (updatedUser) {
+        updatedUser.role = updatedUser.Role.name
+        delete updatedUser.Role
+      }
+      return updatedUser
+    }
+  },
 }
 
 module.exports = UserService

@@ -13,7 +13,7 @@ const UserController = {
     if (!user || !bcrypt.compareSync(password, user.password)) {
       res.json({
         status: 'error',
-        error: '帳號或密碼錯誤！',
+        msg: '帳號或密碼錯誤！',
       })
     } else {
       delete user.password
@@ -71,7 +71,7 @@ const UserController = {
       })
     } else {
       return res.json({
-        status: 'success',
+        status: 'warning',
         msg: '目前沒有任何使用者！',
       })
     }
@@ -81,7 +81,7 @@ const UserController = {
     const user = await UserService.getUser(userId)
     if (!user) {
       return res.json({
-        status: 'success',
+        status: 'warning',
         msg: '該名使用者不存在！',
       })
     }
@@ -96,7 +96,7 @@ const UserController = {
     const user = await UserService.getUser(userId)
     if (!user) {
       return res.json({
-        status: 'success',
+        status: 'warning',
         msg: '該名使用者不存在！',
       })
     }
@@ -112,6 +112,28 @@ const UserController = {
       status: 'success',
       msg,
     })
+  },
+  putUser: async (req, res) => {
+    const { userId, name, email, password, roleId } = matchedData(req)
+    const updatedData = { name, email }
+    if (password) {
+      const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+      updatedData.password = hash
+    }
+    if (roleId) updatedData.roleId = roleId
+    const updatedUser = await UserService.putUser(userId, updatedData)
+    if (updatedUser) {
+      res.json({
+        status: 'success',
+        msg: '更新成功！',
+        updatedUser,
+      })
+    } else {
+      res.json({
+        status: 'error',
+        msg: '更新失敗！',
+      })
+    }
   },
 }
 
