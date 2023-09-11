@@ -25,7 +25,7 @@ module.exports = {
         name: item.name,
         email: item.name + '@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10)),
-        intro: faker.lorem.sentence({ min: 3, max: 200 }),
+        intro: faker.lorem.sentence({ min: 3, max: 100 }),
         avatar: faker.image.avatar(),
         role_id: item.id,
         created_at: new Date(),

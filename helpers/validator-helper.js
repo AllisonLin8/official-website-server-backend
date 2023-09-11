@@ -141,6 +141,17 @@ const putUserHelper = [
   body('roleId').optional(),
 ]
 
+const postNewsHelper = [
+  body('title')
+    .trim()
+    .notEmpty()
+    .withMessage('請填入標題！')
+    .isLength({ min: 3 })
+    .withMessage('標題至少 3 個字！'),
+  body('content').trim().notEmpty().withMessage('請填入內容！'),
+  body('categoryId').trim().notEmpty().withMessage('請填入類別！'),
+]
+
 module.exports = {
   loginDataHelper,
   signUpDataHelper,
@@ -148,4 +159,5 @@ module.exports = {
   deleteUserHelper,
   getUserHelper,
   putUserHelper,
+  postNewsHelper,
 }
