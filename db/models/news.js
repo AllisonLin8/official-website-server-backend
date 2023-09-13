@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       News.belongsTo(models.Category, { foreignKey: 'categoryId' })
+      News.belongsTo(models.User, { foreignKey: 'userId' })
     }
   }
   News.init(
@@ -23,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       content: DataTypes.TEXT,
       categoryId: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
       cover: DataTypes.STRING,
       isPublished: DataTypes.BOOLEAN,
     },

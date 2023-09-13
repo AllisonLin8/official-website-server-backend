@@ -152,6 +152,32 @@ const postNewsHelper = [
   body('categoryId').trim().notEmpty().withMessage('請填入類別！'),
 ]
 
+const patchNewsHelper = [
+  param('newsId').notEmpty().withMessage('案例ID不可為空！'),
+]
+
+const getNewsHelper = [
+  param('newsId').notEmpty().withMessage('案例ID不可為空！'),
+]
+
+const deleteNewsHelper = [
+  param('newsId').notEmpty().withMessage('案例ID不可為空！'),
+]
+
+const putNewsHelper = [
+  body('id').trim().notEmpty().withMessage('案例ID不可為空！'),
+  body('title')
+    .trim()
+    .notEmpty()
+    .withMessage('請填入標題！')
+    .isLength({ min: 3 })
+    .withMessage('標題至少 3 個字！'),
+  body('content').trim().notEmpty().withMessage('請填入內容！'),
+  body('categoryId').trim().notEmpty().withMessage('請填入類別！'),
+  body('isPublished').trim().notEmpty().withMessage('請填入是否發佈！'),
+  body('createdAt').trim().notEmpty().withMessage('請填入初稿日期！'),
+]
+
 module.exports = {
   loginDataHelper,
   signUpDataHelper,
@@ -160,4 +186,8 @@ module.exports = {
   getUserHelper,
   putUserHelper,
   postNewsHelper,
+  patchNewsHelper,
+  getNewsHelper,
+  deleteNewsHelper,
+  putNewsHelper,
 }
