@@ -1,4 +1,5 @@
 'use strict'
+const { faker } = require('@faker-js/faker')
 
 // /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -12,13 +13,17 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
+    const fakeDate = faker.date.past({
+      years: 1,
+      refDate: '2020-01-01T00:00:00.000Z',
+    })
     await queryInterface.bulkInsert(
       'Categories',
-      ['最新動態', '典型案例', '通知公告'].map(item => {
+      ['最新動態', '典型新聞', '通知公告'].map(item => {
         return {
           name: item,
-          created_at: new Date(),
-          updated_at: new Date(),
+          created_at: fakeDate,
+          updated_at: fakeDate,
         }
       }),
       {}

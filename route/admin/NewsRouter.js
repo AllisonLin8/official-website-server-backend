@@ -1,55 +1,46 @@
 const NewsRouter = require('express').Router()
+
 const NewsController = require('../../controllers/admin/NewsController')
 
 const upload = require('../../middleware/multer')
 const { validate } = require('../../middleware/validator')
 
-const {
-  postNewsHelper,
-  patchNewsHelper,
-  getNewsHelper,
-  deleteNewsHelper,
-  putNewsHelper,
-} = require('../../helpers/validator-helper')
+const { newsHelper } = require('../../helpers/validator-helper')
 
 NewsRouter.patch(
-  '/adminapi/news/publish/:newsId',
-  validate(patchNewsHelper),
+  '/news/publish/:newsId',
+  validate(newsHelper.patchNewsHelper),
   NewsController.patchNews
 )
 
-NewsRouter.post(
-  '/adminapi/news/upload',
-  upload.single('file'),
-  NewsController.upload
-)
+NewsRouter.post('/news/upload', upload.single('file'), NewsController.upload)
 
 NewsRouter.get(
-  '/adminapi/news/:newsId',
-  validate(getNewsHelper),
+  '/news/:newsId',
+  validate(newsHelper.getNewsHelper),
   NewsController.getNews
 )
 
 NewsRouter.delete(
-  '/adminapi/news/:newsId',
-  validate(deleteNewsHelper),
+  '/news/:newsId',
+  validate(newsHelper.deleteNewsHelper),
   NewsController.deleteNews
 )
 
 NewsRouter.post(
-  '/adminapi/news',
+  '/news',
   upload.single('file'),
-  validate(postNewsHelper),
+  validate(newsHelper.postNewsHelper),
   NewsController.postNews
 )
 
 NewsRouter.put(
-  '/adminapi/news',
+  '/news',
   upload.single('file'),
-  validate(putNewsHelper),
+  validate(newsHelper.putNewsHelper),
   NewsController.putNews
 )
 
-NewsRouter.get('/adminapi/newslist', NewsController.getNewsList)
+NewsRouter.get('/newslist', NewsController.getNewsList)
 
 module.exports = NewsRouter

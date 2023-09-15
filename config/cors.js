@@ -1,4 +1,5 @@
 const whitelist = ['http://localhost:8080']
+
 const corsOptionsDelegate = (req, callback) => {
   let corsOptions = {}
   if (whitelist.indexOf(req.header('Origin')) !== -1) {

@@ -1,10 +1,10 @@
 'use strict'
-
-// /** @type {import('sequelize-cli').Migration} */
 const { Op } = require('sequelize')
 const { faker } = require('@faker-js/faker')
 
 const { User, Category } = require('../models')
+
+// /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     /**
@@ -30,7 +30,7 @@ module.exports = {
       usersPromise,
     ])
 
-    const data = new Array(10).fill(null).map(item => {
+    const data = new Array(30).fill(null).map(item => {
       item = {}
       const fakeDate = faker.date.past({ years: 2 })
       const randomUser = Math.floor(Math.random() * users.length)

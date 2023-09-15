@@ -11,10 +11,7 @@ const { authenticated } = require('./middleware/myTokenChecker')
 
 const app = express()
 const PORT = process.env.PORT || 3000
-const UserRouter = require('./route/admin/UserRouter')
-const RoleRouter = require('./route/admin/RoleRouter')
-const NewsRouter = require('./route/admin/NewsRouter')
-const CategoryRouter = require('./route/admin/CategoryRouter')
+const useRouter = require('./route/index')
 
 app.use(cors(corsOptionsDelegate))
 
@@ -25,10 +22,7 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')))
 
 app.use(authenticated)
 
-app.use(UserRouter)
-app.use(RoleRouter)
-app.use(NewsRouter)
-app.use(CategoryRouter)
+useRouter(app)
 
 app.listen(PORT, () => {
   console.log(`This server is running on http://localhost:${PORT}`)
