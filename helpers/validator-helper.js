@@ -189,6 +189,25 @@ const productHelper = {
     body('varietyId').trim().notEmpty().withMessage('請填入類別！'),
     body('desc').trim().notEmpty().withMessage('請填入說明！'),
   ],
+  deleteProductHelper: [
+    param('productId').notEmpty().withMessage('產品ID不可為空！'),
+  ],
+  getProductHelper: [
+    param('productId').notEmpty().withMessage('產品ID不可為空！'),
+  ],
+  putProductHelper: [
+    body('id').trim().notEmpty().withMessage('產品ID不可為空！'),
+    body('title')
+      .trim()
+      .notEmpty()
+      .withMessage('請填入標題！')
+      .isLength({ min: 3 })
+      .withMessage('標題至少 3 個字！'),
+    body('subtitle').if(body('subtitle').exists()).trim(),
+    body('varietyId').trim().notEmpty().withMessage('請填入類別！'),
+    body('desc').trim().notEmpty().withMessage('請填入說明！'),
+    body('createdAt').trim().notEmpty().withMessage('請填入初稿日期！'),
+  ],
 }
 
 module.exports = {

@@ -14,6 +14,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       subtitle: {
+        defaultValue: null,
         type: Sequelize.STRING,
       },
       cover: {
