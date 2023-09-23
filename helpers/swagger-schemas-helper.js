@@ -130,6 +130,7 @@ const schemas = {
       'userId',
       'cover',
       'isPublished',
+      'viewCount',
       'createdAt',
       'updatedAt',
     ],
@@ -160,7 +161,11 @@ const schemas = {
       },
       isPublished: {
         type: 'integer',
-        description: '新聞是否發佈',
+        description: '新聞是否發佈，預設為 0',
+      },
+      viewCount: {
+        type: 'integer',
+        description: '新聞點閱數，預設為 0',
       },
       createdAt: {
         type: 'string',

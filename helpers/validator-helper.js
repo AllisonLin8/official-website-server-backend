@@ -208,8 +208,19 @@ const productHelper = {
   ],
 }
 
+const webNewsHelper = {
+  getNewsHelper: [param('id').notEmpty().withMessage('新聞ID不可為空！')],
+  postNewsViewCount: [param('id').notEmpty().withMessage('新聞ID不可為空！')],
+}
+
+const webProductHelper = {
+  getProductHelper: [param('id').notEmpty().withMessage('產品ID不可為空！')],
+}
+
 module.exports = {
   userHelper,
   newsHelper,
   productHelper,
+  webNewsHelper,
+  webProductHelper,
 }

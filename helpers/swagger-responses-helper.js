@@ -261,6 +261,72 @@ const responses = {
         },
       },
     },
+    Pagination: {
+      type: 'object',
+      properties: {
+        pageInfo: {
+          type: 'object',
+          description: '分頁訊息',
+          example: {
+            dataCount: '資料總量',
+            pageCount: '頁碼總數',
+            pageNumArr: '頁碼陣列',
+            currentPage: '當前分頁的頁碼',
+            prev: '當前分頁的上一頁的頁碼',
+            next: '當前分頁的下一頁的頁碼',
+          },
+        },
+        data: {
+          type: 'array',
+          description: '當前頁碼的所有資料',
+          example: [
+            {
+              description:
+                '當前頁碼下的所有資料，資料內容如：id, createdAt 等等',
+            },
+          ],
+        },
+      },
+    },
+    web: {
+      News: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'integer',
+            description: '新聞的 ID',
+          },
+          title: {
+            type: 'string',
+            description: '新聞的標題',
+          },
+          content: {
+            type: 'string',
+            description: '新聞的內容 (HTML)',
+          },
+          cover: {
+            type: 'string',
+            description: '新聞的封面照',
+          },
+          viewCount: {
+            type: 'integer',
+            description: '新聞點閱次數',
+          },
+          createdAt: {
+            type: 'string',
+            description: '該筆資料建立的日期，由資料庫自動生成',
+          },
+          updatedAt: {
+            type: 'string',
+            description: '該筆資料最近更新的日期，由資料庫自動生成',
+          },
+          category: {
+            type: 'string',
+            description: '新聞的類型',
+          },
+        },
+      },
+    },
   },
 }
 

@@ -40,6 +40,8 @@ module.exports = {
       item.category_id = categories[randomCategory].id
       item.user_id = users[randomUser].id
       item.cover = faker.image.urlPicsumPhotos()
+      item.is_published = true
+      item.view_count = Math.floor(Math.random() * 1000)
       item.created_at = fakeDate
       item.updated_at = fakeDate
       return item

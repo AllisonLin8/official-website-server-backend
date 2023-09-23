@@ -10,7 +10,7 @@ const { productHelper } = require('../../helpers/validator-helper')
 /**
  * @swagger
  * tags:
- *  name: Product
+ *  name: Products
  *  description: '管理產品資料的 API'
  */
 
@@ -21,7 +21,7 @@ const { productHelper } = require('../../helpers/validator-helper')
  *    security:
  *    - bearerAuth: []
  *    summary: '獲取特定產品的資訊'
- *    tags: [Product]
+ *    tags: [Products]
  *    parameters:
  *      - in: path
  *        name: id
@@ -58,7 +58,7 @@ ProductRouter.get(
  * /adminapi/products/{id}:
  *  put:
  *    summary: '編輯產品資料'
- *    tags: [Product]
+ *    tags: [Products]
  *    parameters:
  *      - in: path
  *        name: id
@@ -86,7 +86,7 @@ ProductRouter.put(
  * /adminapi/products/{id}:
  *  delete:
  *    summary: '刪除產品'
- *    tags: [Product]
+ *    tags: [Products]
  *    parameters:
  *      - in: path
  *        name: id
@@ -111,7 +111,7 @@ ProductRouter.delete(
  * /adminapi/products:
  *  post:
  *    summary: '上傳新的產品'
- *    tags: [Product]
+ *    tags: [Products]
  *    requestBody:
  *      $ref: '#/components/requestBodies/PostProduct'
  *    responses:
@@ -134,7 +134,7 @@ ProductRouter.post(
  *    security:
  *    - bearerAuth: []
  *    summary: '獲取所有產品'
- *    tags: [Product]
+ *    tags: [Products]
  *    parameters:
  *      - in: query
  *        name: length

@@ -19,7 +19,7 @@ module.exports = {
     })
     await queryInterface.bulkInsert(
       'Categories',
-      ['最新動態', '典型新聞', '通知公告'].map(item => {
+      ['最新動態', '案例分享', '通知公告'].map(item => {
         return {
           name: item,
           created_at: fakeDate,

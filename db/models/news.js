@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.INTEGER,
       cover: DataTypes.STRING,
       isPublished: DataTypes.BOOLEAN,
+      viewCount: DataTypes.INTEGER,
     },
     {
       sequelize,

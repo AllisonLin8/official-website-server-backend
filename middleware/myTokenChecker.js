@@ -5,8 +5,13 @@ const noVerification = ['/adminapi/users/login', '/adminapi/users/signup']
 
 const authenticated = (req, res, next) => {
   // 確認該路由是否需要驗證
-  if (noVerification.includes(req.url) || req.originalUrl.includes('api-docs'))
+  if (
+    noVerification.includes(req.url) ||
+    req.originalUrl.includes('api-docs') ||
+    req.originalUrl.includes('webapi')
+  ) {
     return next()
+  }
   // passport驗證
   passport.authenticate('jwt', { session: false }, (err, user) => {
     // 當passport驗證失敗
