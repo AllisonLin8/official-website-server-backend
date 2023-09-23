@@ -3,12 +3,28 @@ const { News, Category } = require('../../db/models')
 const formatDate = require('../../helpers/dayjs-helper')
 
 const NewsService = {
-  getNews: async (id, isDateFormatted) => {
+  patchNewsIsPublished: async (id, isPublished) => {
     try {
+      const patchedNews = await News.update(
+        { isPublished: !isPublished },
+        { where: { id } }
+      )
+      if (patchedNews[0] === 1) return true
+      return false
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  getNews: async (id, currentUser, isDateFormatted) => {
+    try {
+      const role = currentUser.role
+      const userId = currentUser.id
+      const whereClause =
+        role === 'root' || role === 'editor' ? { id } : { id, userId }
       const news = await News.findOne({
         raw: true,
         nest: true,
-        where: { id },
+        where: whereClause,
         attributes: { exclude: ['categoryId'] },
         include: [{ model: Category, attributes: ['name'] }],
       })
@@ -29,9 +45,27 @@ const NewsService = {
       throw new Error(error)
     }
   },
-  getNewsList: async user => {
+  putNews: async (id, newData) => {
     try {
-      const { id, role } = user
+      const putNews = await News.update(newData, { where: { id } })
+      if (putNews[0] === 1) return true
+      return false
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  deleteNews: async id => {
+    try {
+      const deleteNews = await News.destroy({ where: { id } })
+      if (deleteNews === 1) return true
+      return false
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  getNewsList: async currentUser => {
+    try {
+      const { id, role } = currentUser
       const whereClause =
         role === 'root' || role === 'editor' ? {} : { userId: id }
       const newsList = await News.findAll({
@@ -60,39 +94,9 @@ const NewsService = {
       throw new Error(error)
     }
   },
-  postNews: async postData => {
+  postNews: async newData => {
     try {
-      return await News.create(postData)
-    } catch (error) {
-      throw new Error(error)
-    }
-  },
-  patchNews: async (id, isPublished) => {
-    try {
-      const patchedNews = await News.update(
-        { isPublished: !isPublished },
-        { where: { id } }
-      )
-      if (patchedNews[0] === 1) return true
-      return false
-    } catch (error) {
-      throw new Error(error)
-    }
-  },
-  putNews: async newData => {
-    try {
-      const putNews = await News.update(newData, { where: { id: newData.id } })
-      if (putNews[0] === 1) return true
-      return false
-    } catch (error) {
-      throw new Error(error)
-    }
-  },
-  deleteNews: async id => {
-    try {
-      const deleteNews = await News.destroy({ where: { id } })
-      if (deleteNews === 1) return true
-      return false
+      return await News.create(newData)
     } catch (error) {
       throw new Error(error)
     }

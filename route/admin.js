@@ -10,11 +10,11 @@ const RoleRouter = require('./admin/RoleRouter')
 const UserRouter = require('./admin/UserRouter')
 
 // 將所有路由模塊添加到主路由
-router.use(ProductRouter)
-router.use(VarietyRouter)
-router.use(CategoryRouter)
-router.use(NewsRouter)
-router.use(RoleRouter)
-router.use(UserRouter)
+router.use('/products', ProductRouter)
+router.use('/varieties', VarietyRouter)
+router.use('/categories', CategoryRouter)
+router.use('/newslist', NewsRouter)
+router.use('/roles', RoleRouter)
+router.use('/users', UserRouter)
 
 module.exports = router

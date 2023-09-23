@@ -49,29 +49,8 @@ const userHelper = {
       }),
     body('roleId').optional(),
   ],
-  uploadUserHelper: [
-    body('name')
-      .trim()
-      .notEmpty()
-      .withMessage('請填入名稱！')
-      .isLength({ min: 3, max: 20 })
-      .withMessage('名稱至少 3 個字，至多 20 個字！')
-      .custom(async (value, { req }) => {
-        const root = await User.findOne({ where: { name: 'root' }, raw: true })
-        if (req.user.id === root.id && value !== root.name)
-          throw new Error('不可變更 root 的名稱！')
-      }),
-    body('intro')
-      .trim()
-      .isLength({ min: 0, max: 200 })
-      .withMessage('自介最長 200 個字！'),
-  ],
-  deleteUserHelper: [
-    param('userId').notEmpty().withMessage('使用者ID不可為空！'),
-  ],
-  getUserHelper: [param('userId').notEmpty().withMessage('使用者ID不可為空！')],
   putUserHelper: [
-    param('userId')
+    param('id')
       .notEmpty()
       .withMessage('使用者ID不可為空！')
       .custom(async value => {
@@ -139,25 +118,37 @@ const userHelper = {
       }),
     body('roleId').optional(),
   ],
-}
-const newsHelper = {
-  postNewsHelper: [
-    body('title')
+  patchUserProfileHelper: [
+    param('id').notEmpty().withMessage('使用者ID不可為空！'),
+    body('name')
       .trim()
       .notEmpty()
-      .withMessage('請填入標題！')
-      .isLength({ min: 3 })
-      .withMessage('標題至少 3 個字！'),
-    body('content').trim().notEmpty().withMessage('請填入內容！'),
-    body('categoryId').trim().notEmpty().withMessage('請填入類別！'),
+      .withMessage('請填入名稱！')
+      .isLength({ min: 3, max: 20 })
+      .withMessage('名稱至少 3 個字，至多 20 個字！')
+      .custom(async (value, { req }) => {
+        const root = await User.findOne({ where: { name: 'root' }, raw: true })
+        if (req.user.id === root.id && value !== root.name)
+          throw new Error('不可變更 root 的名稱！')
+      }),
+    body('intro')
+      .trim()
+      .isLength({ min: 0, max: 200 })
+      .withMessage('自介最長 200 個字！'),
   ],
-  patchNewsHelper: [param('newsId').notEmpty().withMessage('新聞ID不可為空！')],
-  getNewsHelper: [param('newsId').notEmpty().withMessage('新聞ID不可為空！')],
-  deleteNewsHelper: [
-    param('newsId').notEmpty().withMessage('新聞ID不可為空！'),
+  patchUserIsDeletedHelper: [
+    param('id').notEmpty().withMessage('使用者ID不可為空！'),
   ],
+  getUserHelper: [param('id').notEmpty().withMessage('使用者ID不可為空！')],
+}
+
+const newsHelper = {
+  patchNewsIsPublishedHelper: [
+    param('id').notEmpty().withMessage('新聞ID不可為空！'),
+  ],
+  getNewsHelper: [param('id').notEmpty().withMessage('新聞ID不可為空！')],
   putNewsHelper: [
-    body('id').trim().notEmpty().withMessage('新聞ID不可為空！'),
+    param('id').trim().notEmpty().withMessage('新聞ID不可為空！'),
     body('title')
       .trim()
       .notEmpty()
@@ -175,28 +166,23 @@ const newsHelper = {
     body('isPublished').trim().notEmpty().withMessage('請填入是否發佈！'),
     body('createdAt').trim().notEmpty().withMessage('請填入初稿日期！'),
   ],
-}
-
-const productHelper = {
-  postProductHelper: [
+  deleteNewsHelper: [param('id').notEmpty().withMessage('新聞ID不可為空！')],
+  postNewsHelper: [
     body('title')
       .trim()
       .notEmpty()
       .withMessage('請填入標題！')
       .isLength({ min: 3 })
       .withMessage('標題至少 3 個字！'),
-    body('subtitle').if(body('subtitle').exists()).trim(),
-    body('varietyId').trim().notEmpty().withMessage('請填入類別！'),
-    body('desc').trim().notEmpty().withMessage('請填入說明！'),
+    body('content').trim().notEmpty().withMessage('請填入內容！'),
+    body('categoryId').trim().notEmpty().withMessage('請填入類別！'),
   ],
-  deleteProductHelper: [
-    param('productId').notEmpty().withMessage('產品ID不可為空！'),
-  ],
-  getProductHelper: [
-    param('productId').notEmpty().withMessage('產品ID不可為空！'),
-  ],
+}
+
+const productHelper = {
+  getProductHelper: [param('id').notEmpty().withMessage('產品ID不可為空！')],
   putProductHelper: [
-    body('id').trim().notEmpty().withMessage('產品ID不可為空！'),
+    param('id').trim().notEmpty().withMessage('產品ID不可為空！'),
     body('title')
       .trim()
       .notEmpty()
@@ -207,6 +193,18 @@ const productHelper = {
     body('varietyId').trim().notEmpty().withMessage('請填入類別！'),
     body('desc').trim().notEmpty().withMessage('請填入說明！'),
     body('createdAt').trim().notEmpty().withMessage('請填入初稿日期！'),
+  ],
+  deleteProductHelper: [param('id').notEmpty().withMessage('產品ID不可為空！')],
+  postProductHelper: [
+    body('title')
+      .trim()
+      .notEmpty()
+      .withMessage('請填入標題！')
+      .isLength({ min: 3 })
+      .withMessage('標題至少 3 個字！'),
+    body('subtitle').if(body('subtitle').exists()).trim(),
+    body('varietyId').trim().notEmpty().withMessage('請填入類別！'),
+    body('desc').trim().notEmpty().withMessage('請填入說明！'),
   ],
 }
 

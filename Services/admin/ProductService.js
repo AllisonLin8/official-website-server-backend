@@ -29,6 +29,33 @@ const ProductService = {
       throw new Error(error)
     }
   },
+  putProduct: async (id, newData) => {
+    try {
+      const putProduct = await Product.update(newData, {
+        where: { id },
+      })
+      if (putProduct[0] === 1) return true
+      return false
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  deleteProduct: async id => {
+    try {
+      const deleteProduct = await Product.destroy({ where: { id } })
+      if (deleteProduct === 1) return true
+      return false
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  postProduct: async newData => {
+    try {
+      return await Product.create(newData)
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
   getProducts: async length => {
     try {
       const options = {
@@ -56,33 +83,6 @@ const ProductService = {
         return formattedProducts
       }
       return []
-    } catch (error) {
-      throw new Error(error)
-    }
-  },
-  postProduct: async postData => {
-    try {
-      return await Product.create(postData)
-    } catch (error) {
-      throw new Error(error)
-    }
-  },
-  putProduct: async newData => {
-    try {
-      const putProduct = await Product.update(newData, {
-        where: { id: newData.id },
-      })
-      if (putProduct[0] === 1) return true
-      return false
-    } catch (error) {
-      throw new Error(error)
-    }
-  },
-  deleteProduct: async id => {
-    try {
-      const deleteProduct = await Product.destroy({ where: { id } })
-      if (deleteProduct === 1) return true
-      return false
     } catch (error) {
       throw new Error(error)
     }

@@ -12,6 +12,7 @@ const { authenticated } = require('./middleware/myTokenChecker')
 const app = express()
 const PORT = process.env.PORT || 3000
 const useRouter = require('./route/index')
+const initSwagger = require('./utils/swagger')
 
 app.use(cors(corsOptionsDelegate))
 
@@ -23,6 +24,7 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use(authenticated)
 
 useRouter(app)
+initSwagger(app)
 
 app.listen(PORT, () => {
   console.log(`This server is running on http://localhost:${PORT}`)
