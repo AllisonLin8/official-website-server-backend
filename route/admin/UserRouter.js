@@ -15,12 +15,6 @@ const { userHelper } = require('../../helpers/validator-helper')
  *  description: '管理使用者資料的 API'
  */
 
-// ! 測試token刷新用
-// UserRouter.get('/users/home', authenticatedRoot, (req, res) => {
-//   console.log('這邊有接到pass的req.user嗎：', req.user)
-//   res.send({ msg: '點擊成功！' })
-// })
-
 /**
  * @swagger
  * /adminapi/users/login:

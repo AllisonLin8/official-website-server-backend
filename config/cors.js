@@ -1,4 +1,9 @@
-const whitelist = ['http://localhost:8080', 'http://localhost:8081']
+const whitelist = [
+  'http://localhost:8080',
+  'http://localhost:8081',
+  'http://owwf.s3-website-ap-northeast-1.amazonaws.com',
+  'http://owaf.s3-website-ap-northeast-1.amazonaws.com',
+]
 
 const corsOptionsDelegate = (req, callback) => {
   let corsOptions = {}
