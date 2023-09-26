@@ -33,7 +33,7 @@ const initSwagger = app => {
       security: [{ bearerAuth: [] }],
       servers: [
         {
-          url: 'http://obsb.ap-northeast-1.elasticbeanstalk.com',
+          url: 'http://owsb.ap-northeast-1.elasticbeanstalk.com',
           description: 'AWS server',
         },
         { url: 'http://localhost:3000', description: 'Local server' },
